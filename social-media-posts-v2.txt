@@ -1,0 +1,32 @@
+# Veltrix: First "Build in Public" Post
+
+## LinkedIn Post
+Big milestone today: The Veltrix L2 rollup is officially alive! 🚀
+
+After weeks of architecting and building, I’ve successfully spun up a fully functional local OP Stack devnet. This isn't just a prototype—it’s a complete L2 environment running locally.
+
+What I’ve achieved:
+✅ Orchestrated a full L2 stack: L1 (Anvil), Execution Engine (op-geth), Consensus Layer (op-node), Batcher, and Proposer.
+✅ Validated end-to-end chain integrity.
+✅ Verified smart contract deployment and execution.
+
+Building on the OP Stack has been an incredible deep dive into modular blockchain architecture. The infrastructure is solid, and the devnet is ready for the next phase of development.
+
+Next up: Bridging and cross-chain testing.
+
+#BuildInPublic #Ethereum #L2 #OPStack #BlockchainDevelopment #Veltrix #Web3
+
+---
+
+## Twitter/X Post
+Veltrix L2 is LIVE on local devnet! 🏗️🚀
+
+Successfully orchestrated the full OP Stack:
+✅ Anvil L1
+✅ op-geth
+✅ op-node
+✅ op-batcher & proposer
+
+Infrastructure is running perfectly. Next stop: cross-chain deposits and withdrawals. Building the future of L2s, one block at a time.
+
+#Ethereum #Rollups #OPStack #Web3Dev #Veltrix #BuildInPublic
