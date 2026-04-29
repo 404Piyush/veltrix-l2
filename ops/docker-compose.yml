@@ -68,7 +68,7 @@ services:
       - OP_BATCHER_POLL_INTERVAL=1s
       - OP_BATCHER_SUB_SAFETY_MARGIN=4
       - OP_BATCHER_NUM_CONFIRMATIONS=1
-      - OP_BATCHER_PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 # Default Anvil Key #1
+      - OP_BATCHER_PRIVATE_KEY=0x9fe6e142e70a998a22df54fc8f0adbe30635b15315233369bd09171735379508 # Default Anvil Key #1
 
   # Veltrix L2 Proposer (Posts state roots to L1)
   op-proposer:
@@ -80,7 +80,7 @@ services:
       - OP_PROPOSER_L1_ETH_RPC=http://l1:8545
       - OP_PROPOSER_ROLLUP_RPC=http://op-node:9545
       - OP_PROPOSER_POLL_INTERVAL=12s
-      - OP_PROPOSER_PRIVATE_KEY=0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d # Default Anvil Key #2
+      - OP_PROPOSER_PRIVATE_KEY=0x9fe6e142e70a998a22df54fc8f0adbe30635b15315233369bd09171735379508 # Default Anvil Key #2
 
 volumes:
   geth_data:
