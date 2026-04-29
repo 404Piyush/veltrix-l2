@@ -42,4 +42,4 @@ Ensure you have **Docker** and **Foundry** installed.
 - [ ] Public Testnet Launch
 
 ---
-*Built with ❤️ by [Your Name]. Follow the journey.*
+*Built with ❤️ by Piyush Utkar. Follow the journey.*
