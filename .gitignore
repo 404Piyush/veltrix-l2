@@ -6,3 +6,6 @@ tmp/
 .env
 jwt.txt
 .vscode/
+ops/veltrix-keys.json
+.env
+ops/p2p-node-key.txt
