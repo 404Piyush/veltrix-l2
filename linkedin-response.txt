@@ -1,0 +1,13 @@
+# Response for LinkedIn Comment
+
+"That's a great question! While the OP Stack provides excellent defaults, I found that they are rarely 'plug-and-play' when building a custom environment from scratch. I ran into several specific challenges during validation:
+
+1. **Genesis Hash Mismatch:** The default configuration assumes a specific genesis state. I had to manually align the L1 genesis block hash with my live Anvil L1 instance to prevent the op-node from rejecting the L1 origin.
+
+2. **JWT Authentication:** Establishing a secure, authenticated link between op-geth (Execution Layer) and op-node (Consensus Layer) over port 8551 was non-trivial. It required precise synchronization of the 32-byte hex JWT secret across both container volumes.
+
+3. **L1 Beacon API:** Recent op-node versions expect a dedicated Beacon API endpoint for consensus data. Since I'm using an standard execution RPC (Alchemy), I had to configure the correct flags—specifically utilizing '--l1.trustrpc'—to keep the devnet lightweight and compatible.
+
+4. **EIP-1559 Compatibility:** I had to patch the genesis state to explicitly enable London and EIP-1559 fork parameters to ensure modern transaction compatibility, which the engine was initially rejecting.
+
+The OP Stack is highly modular, which is its greatest strength, but it definitely demanded a deep dive into the underlying configuration files to ensure the entire pipeline—from the genesis state to the consensus driver—was internally consistent. It’s been an incredible deep dive into modular blockchain architecture!"

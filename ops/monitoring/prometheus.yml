@@ -1,0 +1,46 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: local-op-geth
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets:
+          - ops-op-geth-1:6060
+
+  - job_name: local-op-node
+    static_configs:
+      - targets:
+          - ops-op-node-1:7300
+
+  - job_name: local-op-batcher
+    static_configs:
+      - targets:
+          - ops-op-batcher-1:7300
+
+  - job_name: local-op-proposer
+    static_configs:
+      - targets:
+          - ops-op-proposer-1:7300
+
+  - job_name: sepolia-op-geth
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets:
+          - veltrix-sepolia-op-geth-1:6060
+
+  - job_name: sepolia-op-node
+    static_configs:
+      - targets:
+          - veltrix-sepolia-op-node-1:7300
+
+  - job_name: sepolia-op-batcher
+    static_configs:
+      - targets:
+          - veltrix-sepolia-op-batcher-1:7300
+
+  - job_name: sepolia-op-proposer
+    static_configs:
+      - targets:
+          - veltrix-sepolia-op-proposer-1:7300

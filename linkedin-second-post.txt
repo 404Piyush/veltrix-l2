@@ -1,0 +1,156 @@
+# Veltrix: Second Build in Public Post
+
+## LinkedIn Post
+
+Veltrix update #2: moved from local devnet to a Sepolia-backed OP Stack testnet.
+
+This milestone was mostly infra-heavy: not just "start the containers", but getting the real rollup pipeline to behave correctly against Sepolia.
+
+What is now working:
+- Sepolia-backed op-geth, op-node, op-batcher, and op-proposer are running.
+- L1 derivation caught up from a large backlog; l1_cursor_lag is now around 4 blocks.
+- safe_l2 and finalized_l2 are advancing from real L1 batch data.
+- op-proposer moved past the stale duplicate proposal issue and is now publishing newer output roots successfully.
+- Prometheus and Grafana are live for local + Sepolia stack monitoring.
+- Health checks now show unsafe, safe, finalized, unsafe-safe lag, and L1 cursor lag for both environments.
+
+The interesting part: unsafe blocks were easy to produce, but getting safe/finalized movement right required waiting for OP Stack derivation to replay Sepolia L1 batch data in order. That was a good reminder that an L2 is only meaningful when the L1 data path is correct.
+
+Next steps:
+- Bridge UI
+- Faucet
+- Public explorer polish
+- VPS/domain deployment once the technical path is stable
+
+This is still a testnet milestone, not a public launch yet, but the core rollup infra is now much closer to production-style operation.
+
+#BuildInPublic #Ethereum #OPStack #Layer2 #Rollups #Web3 #BlockchainDevelopment #Veltrix
+
+## Screenshots To Take
+
+1. Health check terminal
+
+Command:
+
+```bash
+./ops/health-check.sh
+```
+
+Capture:
+- local-devnet healthy
+- sepolia l1_cursor_lag around 4
+- sepolia safe_l2 and finalized_l2 advancing
+
+2. Proposer proof
+
+Command:
+
+```bash
+docker logs --since 30m veltrix-sepolia-op-proposer-1 2>&1 \
+  | grep -E 'Proposing output root|Proposer tx successfully published|Transaction confirmed|Failed to send proposal|reverted' \
+  | tail -80
+```
+
+Capture:
+- "Proposing output root" with newer blocks like 25225, 25725, 30330, 35267, or later
+- "Proposer tx successfully published"
+- "Transaction confirmed"
+
+3. Prometheus targets
+
+Command:
+
+```bash
+open http://localhost:9090/targets
+```
+
+Or terminal:
+
+```bash
+curl -s http://127.0.0.1:9090/api/v1/targets \
+  | jq -r '.data.activeTargets[] | [.labels.job, .health] | @tsv'
+```
+
+Capture:
+- local-op-batcher up
+- local-op-geth up
+- local-op-node up
+- local-op-proposer up
+- sepolia-op-batcher up
+- sepolia-op-geth up
+- sepolia-op-node up
+- sepolia-op-proposer up
+
+4. Grafana dashboard
+
+URL:
+
+```text
+http://localhost:3001
+```
+
+Login:
+
+```text
+username: admin
+password: veltrix
+```
+
+Capture:
+- Veltrix Overview dashboard
+- target health panels
+- Sepolia/local panels if visible
+
+5. Batcher proof
+
+Command:
+
+```bash
+docker logs --since 30m veltrix-sepolia-op-batcher-1 2>&1 \
+  | grep -E 'Channel closed|Transaction successfully published|Transaction confirmed|Channel is fully submitted|oldest_l2|latest_l2' \
+  | tail -80
+```
+
+Capture:
+- "Channel closed"
+- "latest_l2"
+- "Transaction successfully published"
+- "Transaction confirmed"
+
+6. Docker services
+
+Command:
+
+```bash
+docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}' \
+  | grep -E 'veltrix|ops-'
+```
+
+Capture:
+- Sepolia stack containers running
+- Monitoring containers running
+
+7. Optional explorer UI
+
+Capture:
+- Veltrix explorer homepage/dashboard if visually clean
+- Avoid showing broken, empty, or dev-only pages
+
+## Do Not Screenshot
+
+- `.env`
+- private keys
+- seed phrases
+- full RPC URLs with provider tokens
+- wallet key files
+- any terminal command that prints secrets
+
+## Safe Claim
+
+Use this claim:
+
+"Sepolia-backed OP Stack testnet is running with batching, proposing, derivation catch-up, and monitoring live."
+
+Avoid this claim for now:
+
+"Mainnet ready" or "public launch complete."

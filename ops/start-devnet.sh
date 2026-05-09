@@ -16,7 +16,7 @@ fi
 
 # 2. Start the Mock L1 (Anvil)
 echo "⛓️ Starting Mock L1 (Anvil)..."
-docker-compose -f "$OPS_DIR/docker-compose.yml" up -d l1
+docker compose -f "$OPS_DIR/docker-compose.yml" up -d l1
 
 echo "⏳ Waiting for L1 to be ready..."
 COUNT=0
@@ -34,22 +34,12 @@ until curl -s -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.
 done
 echo "✅ L1 is online."
 
-# 3. Initialize op-geth (Genesis)
-# Note: In a real setup, we'd use op-node to generate the genesis and rollup.json.
-# For this prototype, we'll use the placeholder configs we created.
-echo "🛠️ Initializing op-geth genesis..."
-docker run --rm \
-    -v "$CONFIGS_DIR:/config" \
-    -v "veltrix_geth_data:/data" \
-    us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:latest \
-    init --datadir=/data /config/genesis.json
-
-# 4. Start the rest of the stack
+# 3. Start the rest of the stack (op-geth entrypoint handles genesis init)
 echo "🏗️ Starting Veltrix L2 stack..."
-docker-compose -f "$OPS_DIR/docker-compose.yml" up -d
+docker compose -f "$OPS_DIR/docker-compose.yml" up -d
 
 echo "🎉 Veltrix L2 is starting up!"
 echo "📍 L1 RPC: http://localhost:8545"
 echo "📍 L2 RPC: http://localhost:9545"
 echo "📍 Rollup RPC: http://localhost:7545"
-echo "🔍 Use 'docker-compose -f ops/docker-compose.yml logs -f' to watch the logs."
+echo "🔍 Use 'docker compose -f ops/docker-compose.yml logs -f' to watch the logs."

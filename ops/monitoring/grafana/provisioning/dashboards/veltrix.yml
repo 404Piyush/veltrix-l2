@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: Veltrix
+    orgId: 1
+    folder: Veltrix
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards

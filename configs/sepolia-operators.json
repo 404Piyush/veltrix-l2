@@ -1,0 +1,7 @@
+{
+  "deployerAddress": "0x83FEb86BF4BF50092dcB4f5e41bAE2603172eE8E",
+  "sequencerAddress": "0x4A04C47a3e52Ecdd472E8a63e77DAC474E0A828C",
+  "batcherAddress": "0x6184AD388aa263135FA25D9ee48902159Aa7BF8d",
+  "proposerAddress": "0x63748C342eabA529C428a1FEe2030FE5adbaDAB8",
+  "challengerAddress": "0x1Ef40ad488CBF0948B17e00a35Bd13557802Fd2d"
+}

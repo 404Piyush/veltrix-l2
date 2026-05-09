@@ -1,0 +1,13 @@
+{
+  "name": "Veltrix L2",
+  "chainId": 845320,
+  "rpc": ["https://veltrix-rpc.404piyush.me"],
+  "explorers": [{"name": "Veltrix Explorer", "url": "https://veltrix-explorer.404piyush.me", "standard": "EIP3091"}],
+  "nativeCurrency": {
+    "name": "Veltrix",
+    "symbol": "VELT",
+    "decimals": 18
+  },
+  "shortName": "veltrix",
+  "slug": "veltrix"
+}

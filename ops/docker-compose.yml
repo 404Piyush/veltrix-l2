@@ -1,98 +1,104 @@
 version: '3.8'
-
 services:
-  # Mock Ethereum L1
   l1:
     image: ghcr.io/foundry-rs/foundry:latest
     ports:
       - "8545:8545"
     entrypoint: anvil
-    command: --host 0.0.0.0 --block-time 12 --chain-id 31337
+    command: --host 0.0.0.0 --block-time 12 --chain-id 31337 --timestamp ${L1_GENESIS_TIMESTAMP:-1777670160}
 
-  # Veltrix L2 Execution Engine
   op-geth:
-    image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:latest
+    image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:optimism
     depends_on:
       - l1
     ports:
-      - "9545:8545" # L2 RPC
-      - "8551:8551" # Engine API
+      - "9545:8545"
+      - "8551:8551"
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
     volumes:
+      - geth_data:/root/.ethereum
+      - ./entrypoint.sh:/entrypoint.sh
       - ./jwt.txt:/config/jwt.txt
-      - geth_data:/data
-    environment:
-      - GETH_DATADIR=/data
-      - GETH_AUTHRPC_JWTSECRET=/config/jwt.txt
-      - GETH_HTTP=true
-      - GETH_HTTP_ADDR=0.0.0.0
-      - GETH_HTTP_PORT=8545
-      - GETH_HTTP_API=eth,net,web3,debug,admin
-      - GETH_WS=true
-      - GETH_WS_ADDR=0.0.0.0
-      - GETH_WS_API=eth,net,web3,debug,admin
-      - GETH_AUTHRPC_ADDR=0.0.0.0
-      - GETH_AUTHRPC_PORT=8551
-      - GETH_AUTHRPC_VHOSTS=*
+      - /Users/piyushutkar/Desktop/Veltrix/configs/genesis.json:/config/genesis.json
 
-  # Veltrix L2 Consensus Layer
   op-node:
     image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-node:latest
     depends_on:
       - l1
       - op-geth
     ports:
-      - "7545:9545" # Rollup RPC
+      - "7545:9545"
     volumes:
       - ./jwt.txt:/config/jwt.txt
       - /Users/piyushutkar/Desktop/Veltrix/configs:/config
     command: >
-      op-node
-      --rollup.config=/config/rollup.json
+      op-node --rollup.config=/config/rollup.json
+      --rollup.l1-chain-config=/config/l1-chain-config.json
       --l1=http://l1:8545
+      --l1.beacon.ignore
       --l2=http://op-geth:8551
       --l2.jwt-secret=/config/jwt.txt
-    environment:
-      - OP_NODE_RPC_ADDR=0.0.0.0
-      - OP_NODE_RPC_PORT=9545
+      --rollup.load-protocol-versions=false
+      --l1.trustrpc
+      --sequencer.enabled
+      --sequencer.l1-confs=0
+      --verifier.l1-confs=0
+      --rpc.addr=0.0.0.0
+      --rpc.port=9545
+      --metrics.enabled
+      --metrics.addr=0.0.0.0
+      --metrics.port=7300
+      --p2p.disable
 
-  # Veltrix L2 Batcher (Posts data to L1)
   op-batcher:
     image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-batcher:latest
     depends_on:
       - l1
+      - op-geth
       - op-node
-    environment:
-      - OP_BATCHER_L1_ETH_RPC=http://l1:8545
-      - OP_BATCHER_L2_ETH_RPC=http://op-geth:8545
-      - OP_BATCHER_ROLLUP_RPC=http://op-node:9545
-      - OP_BATCHER_POLL_INTERVAL=1s
-      - OP_BATCHER_SUB_SAFETY_MARGIN=4
-      - OP_BATCHER_NUM_CONFIRMATIONS=1
-      - OP_BATCHER_PRIVATE_KEY=0x9fe6e142e70a998a22df54fc8f0adbe30635b15315233369bd09171735379508 # Default Anvil Key #1
+    command: >
+      op-batcher
+      --l1-eth-rpc=http://l1:8545
+      --l2-eth-rpc=http://op-geth:8545
+      --rollup-rpc=http://op-node:9545
+      --private-key=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+      --data-availability-type=calldata
+      --poll-interval=1s
+      --max-channel-duration=1
+      --max-l1-tx-size-bytes=60000
+      --sub-safety-margin=4
+      --num-confirmations=1
+      --resubmission-timeout=10s
+      --safe-abort-nonce-too-low-count=3
+      --throttle.unsafe-da-bytes-lower-threshold=0
+      --metrics.enabled
+      --metrics.addr=0.0.0.0
+      --metrics.port=7300
+      --log.level=info
 
-  # Veltrix L2 Proposer (Posts state roots to L1)
   op-proposer:
     image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-proposer:latest
+    profiles:
+      - proposer
     depends_on:
       - l1
       - op-node
-    environment:
-      - OP_PROPOSER_L1_ETH_RPC=http://l1:8545
-      - OP_PROPOSER_ROLLUP_RPC=http://op-node:9545
-      - OP_PROPOSER_POLL_INTERVAL=12s
-      - OP_PROPOSER_PRIVATE_KEY=0x9fe6e142e70a998a22df54fc8f0adbe30635b15315233369bd09171735379508 # Default Anvil Key #2
+    command: >
+      op-proposer
+      --l1-eth-rpc=http://l1:8545
+      --rollup-rpc=http://op-node:9545
+      --game-factory-address=0xda5724A71FCbd2813776d13A0b7b4641EB7D678E
+      --game-type=254
+      --private-key=0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d
+      --allow-non-finalized
+      --poll-interval=6s
+      --proposal-interval=12s
+      --num-confirmations=1
+      --resubmission-timeout=10s
+      --metrics.enabled
+      --metrics.addr=0.0.0.0
+      --metrics.port=7300
+      --log.level=info
 
 volumes:
   geth_data:
-
-  prometheus:
-    image: prom/prometheus:latest
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3000:3000"

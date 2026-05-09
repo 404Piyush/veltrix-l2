@@ -1,23 +1,19 @@
 {
   "genesis": {
     "l1": {
-      "hash": "0x7601b05297c0259bc1b1482e1819e21f3557999e97afff46221d6515afb6a68a",
-      "number": 482
-    },
-    "l2": {
-      "hash": "0x3a6dc5b0e184dd8605993c7eb34356bad271002a71cebfc1b34d49bd7f43405b",
+      "hash": "0xddfd6536aa5ff6165340f04b496f18d88e37095589034f341ac655b59da8e37d",
       "number": 0
     },
-    "l2_time": 1777352976,
+    "l2": {
+      "hash": "0x5a2e398237bdf144408a59f4bdff79b766a61587f36d0585ae42e3bcc8e52e13",
+      "number": 0
+    },
+    "l2_time": 1777670160,
     "system_config": {
-      "batcherAddr": "0x2c08b475b02d6e52563035057a0b3d69db17a5d5",
+      "batcherAddr": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
       "overhead": "0x0000000000000000000000000000000000000000000000000000000000000834",
       "scalar": "0x00000000000000000000000000000000000000000000000000000000000f4240",
-      "gasLimit": 30000000,
-      "eip1559Params": "0x0000000000000000",
-      "operatorFeeParams": "0x0000000000000000000000000000000000000000000000000000000000000000",
-      "minBaseFee": 0,
-      "daFootprintGasScalar": 0
+      "gasLimit": 30000000
     }
   },
   "block_time": 2,
@@ -25,18 +21,18 @@
   "seq_window_size": 3600,
   "channel_timeout": 300,
   "l1_chain_id": 31337,
-  "l2_chain_id": 42069,
-  "regolith_time": 0,
-  "canyon_time": 0,
-  "delta_time": 0,
-  "ecotone_time": 0,
-  "fjord_time": 0,
-  "granite_time": 0,
-  "holocene_time": 0,
-  "batch_inbox_address": "0xff00000000000000000000000000000000004206",
-  "deposit_contract_address": "0xd55b8468c15381e7a17f21ac3b8180e20b69b061",
-  "l1_system_config_address": "0x17b83898a4564af92814d3d8c001dbd2268cf9f1",
-  "protocol_versions_address": "0x0000000000000000000000000000000000000000",
+  "l2_chain_id": 845320,
+  "regolith_time": 1777670160,
+  "canyon_time": 1777670160,
+  "delta_time": 1777670160,
+  "ecotone_time": 1777670160,
+  "fjord_time": 1777670160,
+  "granite_time": 1777670160,
+  "holocene_time": 1777670160,
+  "batch_inbox_address": "0xff000000000000000000000000000000000ce608",
+  "deposit_contract_address": "0xd55b8468C15381e7a17f21aC3B8180E20B69B061",
+  "l1_system_config_address": "0x17b83898A4564af92814d3D8c001DBd2268cF9f1",
+  "protocol_versions_address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
   "chain_op_config": {
     "eip1559Elasticity": 6,
     "eip1559Denominator": 50,
