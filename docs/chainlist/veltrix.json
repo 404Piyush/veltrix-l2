@@ -5,7 +5,7 @@
   "explorers": [{"name": "Veltrix Explorer", "url": "https://veltrix-explorer.404piyush.me", "standard": "EIP3091"}],
   "nativeCurrency": {
     "name": "Veltrix",
-    "symbol": "VELT",
+    "symbol": "VEL",
     "decimals": 18
   },
   "shortName": "veltrix",

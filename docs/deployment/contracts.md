@@ -7,9 +7,9 @@ Public contract and operator addresses for the Veltrix Sepolia-backed L2.
 - L1: Sepolia
 - L1 chain ID: `11155111`
 - L2: Veltrix Sepolia L2
-- L2 chain ID: `42069`
-- L2 chain ID hex: `0xa455`
-- Native token: `ETH`
+- L2 chain ID: `845320`
+- L2 chain ID hex: `0xce608`
+- Native token: `VEL`
 - Block time: `2s`
 
 ## Core L1 Contracts
@@ -51,7 +51,7 @@ These are public addresses only. Do not publish private keys.
 Genesis L1 block: 10780324
 Genesis L1 hash: 0xecd1b8cf09d4c16f0651f3d9a782ab674db9544fd0a9b0433bb77ad1b685b7f4
 Genesis L2 hash: 0xe83a879518e1293d1b87f1b4163947f1bbe152164cfb7d8ea53fb9cd8847d630
-Batch inbox: 0xff0000000000000000000000000000000000a455
+Batch inbox: 0xff000000000000000000000000000000000ce608
 Deposit contract: 0x9d6954e55297f9ae78e5c0dc2353c18b31aea0b3
 System config: 0xfa2f9ad613a238ee2ad5d9307be13a5003706bfb
 ```

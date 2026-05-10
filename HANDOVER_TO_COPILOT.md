@@ -8,7 +8,7 @@
   - Deployed new artifacts.
   - Reset the Block Explorer Indexer DB to sync from the new genesis.
   - Restarted all Veltrix systemd services.
-- **Bridge Config:** Updated `veltrix-bridge` defaults (`VITE_L2_CHAIN_ID=0xce608`) to match the new network.
+- **Bridge Config:** Updated `veltrix-bridge` defaults (`VITE_L2_CHAIN_ID=0xce608`, `VITE_L2_NATIVE_SYMBOL=VEL`) to match the new network.
 
 ## 🛠️ Current System State
 - **Chain ID:** `0xce608` (845320)
@@ -27,4 +27,3 @@
 - **Service Name:** `veltrix-sepolia.service`
 - **Indexer Service:** `veltrix-explorer-indexer.service`
 - **Bridge Repo:** `~/Desktop/veltrix-bridge`
-EOF

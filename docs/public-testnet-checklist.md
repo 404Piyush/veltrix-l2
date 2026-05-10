@@ -13,13 +13,13 @@ Use this before posting public URLs or inviting testers.
 ## Chain Metadata
 
 - Network name: `Veltrix Sepolia L2`
-- Chain ID: `42069`
-- Chain ID hex: `0xa455`
-- Native currency: `ETH`
+- Chain ID: `845320`
+- Chain ID hex: `0xce608`
+- Native currency: `VEL`
 - Parent chain: `Sepolia`
 - L1 chain ID: `11155111`
 - Block time: `2s`
-- Batch inbox: `0xff0000000000000000000000000000000000a455`
+- Batch inbox: `0xff000000000000000000000000000000000ce608`
 
 ## User-Facing Apps
 
